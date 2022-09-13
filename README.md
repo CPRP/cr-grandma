@@ -1,5 +1,7 @@
 # cr-grandma
 
+[Resource Preview](https://www.youtube.com/watch?v=NfV0mwMih3g)
+
 ## Simple NPC Medical System for FiveM
 
 [Constant Development Discord](https://discord.gg/gSQbshCNv4)
@@ -27,18 +29,24 @@ This Resource is setup for you to have an NPC(Grandma - Configurable) that would
 - [qb-lock](https://github.com/Nathan-FiveM/qb-lock)
 - [qb-skillbar](https://github.com/qbcore-framework/qb-skillbar)
 
+### Optional DrawText:
+
+- [QBCore-DrawText](https://github.com/qbcore-framework/qb-core)
+- [okokTextUI](https://okok.tebex.io/package/4725001)
+
 ## Additional Credits
 
 ### [tnj-development](https://github.com/tnj-development)
 
-* Added TNJ's Hug System | It was removed from their Repository though, we are using it within this Resource.
+* Added TNJ's Hug System | It was removed from their Repository although, we are using it within this Resource.
 
 ## Installation
 
 * If you encounter any issues whilst Installing or Using/Enforcing this Resource, please feel free to Open a Ticket within the [Constant Development Discord](https://discord.gg/gSQbshCNv4).
 
-### qb-smallresources/server/logs.lua
-* If using Logs --> qb-smallresources/server/logs.lua | Add the following within ```local Webhooks {}```
+### Config.Framework.Framework.Logs
+## qb-smallresources/server/logs.lua
+* If using QBCore Logs --> qb-smallresources/server/logs.lua | Add the following within ```local Webhooks {}```
 ```
     ['constantdevelopmentgrandma'] = 'YOUR_WEBHOOK_HERE',
 ```
