@@ -3,7 +3,7 @@ local QBCore = exports['qb-core']:GetCoreObject()
 local spawned
 
 local function ConstantDevelopmentGrandma(notifType, message, title)
-	if Config.Framework.Notifications == 'QBCore' then
+	if Config.Framework.Notifications == 'qb' then
 		if notifType == 1 then
 			QBCore.Functions.Notify(message, 'success')
 		elseif notifType == 2 then
@@ -11,7 +11,7 @@ local function ConstantDevelopmentGrandma(notifType, message, title)
 		elseif notifType == 3 then
 			QBCore.Functions.Notify(message, 'error')
 		end
-	elseif Config.Framework.Notifications == "okok" then
+	elseif Config.Framework.Notifications == 'okok' then
 		if notifType == 1 then
 			exports['okokNotify']:Alert(title, message, 3000, 'success')
 		elseif notifType == 2 then
@@ -19,7 +19,7 @@ local function ConstantDevelopmentGrandma(notifType, message, title)
 		elseif notifType == 3 then
 			exports['okokNotify']:Alert(title, message, 3000, 'error')
 		end
-	elseif Config.Framework.Notifications == "mythic" then
+	elseif Config.Framework.Notifications == 'mythic' then
 		if notifType == 1 then
 			exports['mythic_notify']:DoHudText('success', message)
 		elseif notifType == 2 then
@@ -27,7 +27,7 @@ local function ConstantDevelopmentGrandma(notifType, message, title)
 		elseif notifType == 3 then
 			exports['mythic_notify']:DoHudText('error', message)
 		end
-    elseif Config.Framework.Notifications == "tnj" then
+    elseif Config.Framework.Notifications == 'tnj' then
         if notifType == 1 then
             exports['tnj-notify']:Notify(message, 'success', 3000)
 		elseif notifType == 2 then
@@ -36,13 +36,7 @@ local function ConstantDevelopmentGrandma(notifType, message, title)
             exports['tnj-notify']:Notify(message, 'error', 3000)
 		end
 	elseif Config.Framework.Notifications == 'chat' then
-        if notifType == 1 then
-            TriggerEvent('chatMessage', message)
-		elseif notifType == 2 then
-            TriggerEvent('chatMessage', message)
-		elseif notifType == 3 then
-            TriggerEvent('chatMessage', message)
-		end
+        TriggerEvent('chatMessage', message)
 	end
 end
 
@@ -143,22 +137,28 @@ Citizen.CreateThread(function()
         }, {
             options = {
                 {
-                    type = "client",
-                    event = "cr-grandma:client:MedicalAid",
-                    icon = Config.IllegalMedicalTarget.TargetIcon,
-                    label = Config.IllegalMedicalTarget.TargetLabel,
-                    canInteract = function()
-                        if not Config.IllegalMedicalTarget.CanInteractLimit then return true else
-                            if QBCore.Functions.GetPlayerData().metadata.isdead or QBCore.Functions.GetPlayerData().metadata.inlaststand then return true else return false end
-                        end
-                    end,
-                },
-                {
+                    num = 1,
                     type = "client",
                     event = "cr-grandma:client:MedicalAidInjuries",
                     icon = Config.IllegalMedicalTarget.InjuryTargetIcon,
                     label = Config.IllegalMedicalTarget.InjuryTargetLabel,
                 },
+                {
+                    num = 2,
+                    icon = Config.IllegalMedicalTarget.TargetIcon,
+                    label = Config.IllegalMedicalTarget.TargetLabel,
+                    canInteract = function()
+                        if Config.IllegalMedicalTarget.CanInteractLimit then
+                            if QBCore.Functions.GetPlayerData().metadata.isdead or QBCore.Functions.GetPlayerData().metadata.inlaststand then
+                                TriggerEvent('cr-grandma:client:MedicalAid')
+                            else
+                                ConstantDevelopmentGrandma(3, "You aren\'t Dead...", Config.IllegalMedical.OkOkNotificationTitle)
+                            end
+                        elseif not Config.IllegalMedicalTarget.CanInteractLimit then
+                            TriggerEvent('cr-grandma:client:MedicalAid')
+                        end
+                    end,
+                }
             },
             distance = Config.IllegalMedicalTarget.TargetDistance
         })
@@ -175,22 +175,28 @@ Citizen.CreateThread(function()
         }, {
             options = {
                 {
-                    type = "client",
-                    event = "cr-grandma:client:MedicalAid",
-                    icon = Config.IllegalMedicalTarget.TargetIcon,
-                    label = Config.IllegalMedicalTarget.TargetLabel,
-                    canInteract = function()
-                        if not Config.IllegalMedicalTarget.CanInteractLimit then return true else
-                            if QBCore.Functions.GetPlayerData().metadata.isdead or QBCore.Functions.GetPlayerData().metadata.inlaststand then return true else return false end
-                        end
-                    end,
-                },
-                {
+                    num = 1,
                     type = "client",
                     event = "cr-grandma:client:MedicalAidInjuries",
                     icon = Config.IllegalMedicalTarget.InjuryTargetIcon,
                     label = Config.IllegalMedicalTarget.InjuryTargetLabel,
                 },
+                {
+                    num = 2,
+                    icon = Config.IllegalMedicalTarget.TargetIcon,
+                    label = Config.IllegalMedicalTarget.TargetLabel,
+                    canInteract = function()
+                        if Config.IllegalMedicalTarget.CanInteractLimit then
+                            if QBCore.Functions.GetPlayerData().metadata.isdead or QBCore.Functions.GetPlayerData().metadata.inlaststand then
+                                TriggerEvent('cr-grandma:client:MedicalAid')
+                            else
+                                ConstantDevelopmentGrandma(3, "You aren\'t Dead...", Config.IllegalMedical.OkOkNotificationTitle)
+                            end
+                        elseif not Config.IllegalMedicalTarget.CanInteractLimit then
+                            TriggerEvent('cr-grandma:client:MedicalAid')
+                        end
+                    end,
+                }
             },
             distance = Config.IllegalMedicalTarget.TargetDistance
         })
